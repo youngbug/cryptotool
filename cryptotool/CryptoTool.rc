@@ -1,0 +1,603 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DLG_CRYPTOALG_AES DIALOGEX 0, 0, 435, 289
+STYLE DS_SETFONT | DS_CENTER | WS_CHILD
+FONT 9, "宋体", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_EDIT1,37,14,330,16,ES_AUTOHSCROLL
+    PUSHBUTTON      "Button1",IDC_BUTTON1,90,193,42,22
+    GROUPBOX        "Data",IDC_STATIC,6,4,425,99
+    LTEXT           "Key:",IDC_STATIC,8,18,23,11
+    LTEXT           "IV:",IDC_STATIC,8,39,23,11
+    EDITTEXT        IDC_EDIT2,37,35,330,16,ES_AUTOHSCROLL
+    LTEXT           "Plain:",IDC_STATIC,8,57,23,11
+    LTEXT           "Cipher:",IDC_STATIC,8,79,29,11
+    EDITTEXT        IDC_EDIT3,37,56,330,16,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT4,37,77,330,16,ES_AUTOHSCROLL
+    GROUPBOX        "Option",IDC_STATIC,5,107,426,34
+    LTEXT           "Key Length:",IDC_STATIC,19,120,45,9
+    COMBOBOX        IDC_COMBO1,69,119,72,17,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Mode:",IDC_STATIC,189,121,24,12
+    COMBOBOX        IDC_COMBO2,217,119,153,16,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Method:",IDC_STATIC,19,161,35,14
+    COMBOBOX        IDC_COMBO3,69,159,173,13,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Padding",IDC_STATIC,5,146,426,36
+    PUSHBUTTON      "Remove Padding",IDC_BUTTON2,334,158,67,16
+    PUSHBUTTON      "Add Padding",IDC_BUTTON3,258,158,67,16
+    EDITTEXT        IDC_EDIT5,370,14,24,16,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT6,370,35,24,16,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT7,370,55,24,16,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT8,370,77,24,16,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY,WS_EX_RIGHT
+END
+
+IDD_DLG_CRYPTOALG_DES DIALOGEX 0, 0, 435, 289
+STYLE DS_SETFONT | DS_CENTER | WS_CHILD
+FONT 9, "宋体", 400, 0, 0x0
+BEGIN
+    EDITTEXT        IDC_EDIT1,37,14,330,16,ES_AUTOHSCROLL
+    PUSHBUTTON      "DES",IDC_BUTTON1,312,238,42,22
+    GROUPBOX        "Data",IDC_STATIC,6,4,425,99
+    LTEXT           "Key:",IDC_STATIC,8,18,23,11
+    LTEXT           "IV:",IDC_STATIC,8,39,23,11
+    EDITTEXT        IDC_EDIT2,37,35,330,16,ES_AUTOHSCROLL
+    LTEXT           "Plain:",IDC_STATIC,8,57,23,11
+    LTEXT           "Cipher:",IDC_STATIC,8,79,29,11
+    EDITTEXT        IDC_EDIT3,37,56,330,16,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT4,37,77,330,16,ES_AUTOHSCROLL
+    RTEXT           "0",IDC_STATIC,368,14,24,16,0,WS_EX_CLIENTEDGE
+    RTEXT           "0",IDC_STATIC,368,34,24,16,0,WS_EX_CLIENTEDGE
+    RTEXT           "0",IDC_STATIC,368,55,24,16,0,WS_EX_CLIENTEDGE
+    RTEXT           "0",IDC_STATIC,368,77,24,16,0,WS_EX_CLIENTEDGE
+    GROUPBOX        "Option",IDC_STATIC,5,107,426,125
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DLG_CRYPTOALG_AES, DIALOG
+    BEGIN
+        RIGHTMARGIN, 431
+        BOTTOMMARGIN, 282
+    END
+
+    IDD_DLG_CRYPTOALG_DES, DIALOG
+    BEGIN
+        RIGHTMARGIN, 431
+        BOTTOMMARGIN, 282
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_DLG_CRYPTOALG_AES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DLG_CRYPTOALG_DES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 英语(美国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\RibbonGadgets.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#ifndef _AFXDLL\r\n"
+    "#include ""afxribbon.rc""      // ribbon and control bars\r\n"
+    "#endif\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\RibbonGadgets.ico"
+
+IDR_RIBBONTYPE          ICON                    "res\\RibbonGadgetsDoc.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_RIBBON_ICONS        BITMAP                  "res\\icons.bmp"
+
+IDB_RIBBON_FILE_SMALL   BITMAP                  "res\\filesmall.bmp"
+
+IDB_RIBBON_FILE_LARGE   BITMAP                  "res\\filelarge.bmp"
+
+IDB_RIBBON_MAIN         BITMAP                  "res\\main.bmp"
+
+IDB_RIBBON_CATEGORY1_SMALL BITMAP                  "res\\CategorySmall_1.bmp"
+
+IDB_RIBBON_CATEGORY1_LARGE BITMAP                  "res\\CategoryLarge_1.bmp"
+
+IDB_RIBBON_PALETTE_1    BITMAP                  "res\\Palette1.bmp"
+
+IDB_RIBBON_PALETTE_2    BITMAP                  "res\\Palette2.bmp"
+
+IDR_TOOLBAR             BITMAP                  "res\\toolbar.bmp"
+
+IDR_CODE                BITMAP                  "res\\code.bmp"
+
+IDB_RIBBON_CATEGORY4_SMALL BITMAP                  "res\\CategorySmall_4.bmp"
+
+IDB_RIBBON_CATEGORY5_SMALL BITMAP                  "res\\CategorySmall_5.bmp"
+
+IDB_RIBBON_CATEGORY3_SMALL BITMAP                  "res\\CategorySmall_3.bmp"
+
+IDB_RIBBON_CATEGORY2_LARGE BITMAP                  "res\\CategoryLarge_2.bmp"
+
+IDB_RIBBON_CATEGORY2_SMALL BITMAP                  "res\\CategorySmall_2.bmp"
+
+IDB_RIBBON_CATEGORY3_LARGE BITMAP                  "res\\CategoryLarge_3.bmp"
+
+IDB_RIBBON_CATEGORY6_LARGE BITMAP                  "res\\CategoryLarge_6.bmp"
+
+IDB_RIBBON_CATEGORY6_SMALL BITMAP                  "res\\CategorySmall_6.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_PASTE_MENU MENU
+BEGIN
+    MENUITEM "&Paste",                      ID_EDIT_PASTE
+    MENUITEM "Paste &Special...",           ID_EDIT_PASTE_SPECIAL
+END
+
+IDR_THEME_MENU MENU
+BEGIN
+    MENUITEM "&Blue Theme",                 ID_VIEW_APPLOOK_2007
+    MENUITEM "B&lack Theme",                ID_VIEW_APPLOOK_2007_1
+    MENUITEM "&Silver Theme",               ID_VIEW_APPLOOK_2007_2
+    MENUITEM "&Aqua Theme",                 ID_VIEW_APPLOOK_2007_3
+END
+
+IDR_RIBBON_MENU_1 MENU
+BEGIN
+    MENUITEM "Item 1",                      ID_RIBBON_MENU_ITEM_1
+    MENUITEM "Item 2",                      ID_RIBBON_MENU_ITEM_2
+    MENUITEM "Item 3",                      ID_RIBBON_MENU_ITEM_3
+    MENUITEM SEPARATOR
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "Item 4",                      ID_RIBBON_MENU_ITEM_4
+        MENUITEM "Item 5",                      ID_RIBBON_MENU_ITEM_5
+        MENUITEM "Item 6",                      ID_RIBBON_MENU_ITEM_6
+    END
+END
+
+IDR_EDIT_MENU MENU
+BEGIN
+    POPUP "_POPUP_"
+    BEGIN
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+END
+
+IDR_RIBBON_MENU_2 MENU
+BEGIN
+    MENUITEM "Item 1",                      ID_RIBBON_MENU_ITEM_1
+    MENUITEM "Item 2",                      ID_RIBBON_MENU_ITEM_2
+    MENUITEM "Item 3",                      ID_RIBBON_MENU_ITEM_3
+END
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&Category"
+    BEGIN
+        MENUITEM "Cryptographic &Algorithm",    ID_CATEGORY_CRYPTOGRAPHICALGORITHM
+        MENUITEM "&Hash Algorithm",             ID_CATEGORY_HASH
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "&View"
+    BEGIN
+        POPUP "&Toolbars"
+        BEGIN
+            MENUITEM "",                            ID_VIEW_TOOLBARS
+        END
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About...",                   ID_APP_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription", "CryptoTool Application"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "InternalName", "CryptoTool"
+            VALUE "LegalCopyright", "Copyright (C) 2021"
+            VALUE "OriginalFilename", "cryptotool.exe"
+            VALUE "ProductName", "CryptoTool Application"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_TOOLBAR TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    SEPARATOR
+    BUTTON      ID_APP_ABOUT
+END
+
+IDR_CODE TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_FILE_SAVE_AS
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Ribbon
+//
+
+IDR_RIBBON              RT_RIBBON_XML           "res\\RibbonGadgets.mfcribbon-ms"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "CryptoTool\n\nMFCRib\n\n\nRibbonGadgets.Document\nMFCRib Document"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "CryptoTool"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_DIRECT    "Send the document directly to the default printer without making changes\nQuick Print"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompt to save documents\nExit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_RIBBON_GBTN_1        "Group Button 1\nGroup Button 1"
+    ID_RIBBON_GBTN_2        "Group Button 2\nGroup Button 2"
+    ID_RIBBON_GBTN_3        "Group Button 3\nGroup Button 3"
+    ID_RIBBON_GBTN_4        "Group Button 4\nGroup Button 4"
+    ID_RIBBON_GBTN_5        "Group Button 5\nGroup Button 5"
+    ID_RIBBON_GBTN_6        "Group Button 6\nGroup Button 6"
+    ID_RIBBON_GBTN_7        "Group Button 7\nGroup Button 7"
+    ID_RIBBON_GBTN_8        "Group Button 8\nGroup Button 8"
+END
+
+STRINGTABLE
+BEGIN
+    ID_RIBBON_GBTN_9        "Group Button 9\nGroup Button 9"
+    ID_RIBBON_GBTN_10       "Group Button 10\nGroup Button 10"
+    ID_RIBBON_GBTN_11       "Group Button 11\nGroup Button 11"
+    ID_RIBBON_EBTN_1        "Edit Box 1\nEdit Box 1"
+    ID_RIBBON_EBTN_2        "Edit Box 2\nEdit Box 2"
+    ID_RIBBON_EBTN_3        "Edit Box 3\nEdit Box 3"
+END
+
+STRINGTABLE
+BEGIN
+    ID_RIBBON_EBTN_4        "Edit Box 4\nEdit Box 4"
+    ID_RIBBON_EBTN_5        "Edit Box 5\nEdit Box 5"
+    ID_RIBBON_EBTN_6        "Edit Box 6\nEdit Box 6"
+    ID_RIBBON_EBTN_7        "Edit Box 7\nEdit Box 7"
+    ID_RIBBON_EBTN_8        "Edit Box 8\nEdit Box 8"
+    ID_RIBBON_EBTN_9        "Edit Box 9\nEdit Box 9"
+    ID_RIBBON_OBTN_5        "Slider 1\nSlider 1"
+    ID_RIBBON_OBTN_6        "Slider 2\nSlider 2"
+    ID_RIBBON_OBTN_7        "Progress Bar 1\nProgress Bar 1"
+    ID_RIBBON_OBTN_9        "Progress Bar 2\nProgress Bar 2"
+END
+
+STRINGTABLE
+BEGIN
+    ID_RIBBON_OBTN_11       "Date and Time Picker\nDate and Time Picker"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompt to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_APPLOOK_2007    "Activate Office 2007 application look\nOffice 2007 Look"
+    ID_TOOLS_OPTIONS        "Changes application options\nOptions"
+END
+
+STRINGTABLE
+BEGIN
+    ID_STATUSBAR_PANE1      "Release date: 2021.10.11"
+    ID_STATUSBAR_PANE2      "Email:cnrgc@163.com WeChat:zhantianzuo"
+END
+
+#endif    // 英语(美国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\RibbonGadgets.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#ifndef _AFXDLL
+#include "afxribbon.rc"      // ribbon and control bars
+#endif
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
