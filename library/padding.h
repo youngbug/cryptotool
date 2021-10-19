@@ -14,6 +14,8 @@ extern "C" {
 
 	int zy_padding_iso9797_m1(unsigned char mode, int block_size, unsigned char* input, int inlen, unsigned char* output, int* outlen);
 	int zy_padding_iso9797_m2(unsigned char mode, int block_size, unsigned char* input, int inlen, unsigned char* output, int* outlen);
+	int zy_padding_iso9797_m3(unsigned char mode, int block_size, unsigned char* input, int inlen, unsigned char* output, int* outlen);
+	int zy_padding_iso9797_m4(unsigned char mode, int block_size, unsigned char* input, int inlen, unsigned char* output, int* outlen);
 
 #ifdef __cplusplus 
 }

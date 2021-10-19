@@ -239,9 +239,13 @@ void CCryptoAlgAes::OnBnClickedButton3()
 	{
 		zy_padding_iso9797_m2(PADDING_ADD, 16, buf, m_Plain.GetLength() / 2, buf_padded, &len);
 	}
-	else if (m_Padding.GetCurSel() == 3) // 
+	else if (m_Padding.GetCurSel() == 3) // iso9797_m3
 	{
-		goto EXIT;
+		zy_padding_iso9797_m3(PADDING_ADD, 16, buf, m_Plain.GetLength() / 2, buf_padded, &len);
+	}
+	else if (m_Padding.GetCurSel() == 4) // iso9797_m4
+	{
+		zy_padding_iso9797_m4(PADDING_ADD, 16, buf, m_Plain.GetLength() / 2, buf_padded, &len);
 	}
 	zy_hex2string(str_padded, buf_padded, len);
 	m_Plain.Format("%s", str_padded);
@@ -284,9 +288,13 @@ void CCryptoAlgAes::OnBnClickedButton2()
 	{
 		zy_padding_iso9797_m2(PADDING_REMOVE, 16, buf, m_Plain.GetLength() / 2, buf_padded, &len);
 	}
-	else if (m_Padding.GetCurSel() == 3) // 
+	else if (m_Padding.GetCurSel() == 3) // iso9797_m3
 	{
-		goto EXIT;
+		zy_padding_iso9797_m3(PADDING_REMOVE, 16, buf, m_Plain.GetLength() / 2, buf_padded, &len);
+	}
+	else if (m_Padding.GetCurSel() == 4) // iso9797_m4
+	{
+		zy_padding_iso9797_m4(PADDING_REMOVE, 16, buf, m_Plain.GetLength() / 2, buf_padded, &len);
 	}
 	zy_hex2string(str_padded, buf_padded, len);
 	m_Plain.Format("%s", str_padded);
