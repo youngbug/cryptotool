@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CCryptoAlgAes, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT4, &CCryptoAlgAes::OnEnChangeEdit4)
 	ON_BN_CLICKED(IDC_BUTTON3, &CCryptoAlgAes::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON2, &CCryptoAlgAes::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON4, &CCryptoAlgAes::OnBnClickedButton4)
 END_MESSAGE_MAP()
 
 
@@ -305,4 +306,13 @@ EXIT:
 	free(buf);
 	free(buf_padded);
 	free(str_padded);
+}
+
+
+void CCryptoAlgAes::OnBnClickedButton4()
+{
+	// TODO: AES Encrypt
+	unsigned char key[24];
+	unsigned char iv[16];
+
 }
