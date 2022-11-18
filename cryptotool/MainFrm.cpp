@@ -24,6 +24,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+CMainFrame* g_MainFrame = NULL; //全局指针
+
 const int IdShowProgress1Timer = 1;
 const int IdShowProgress2Timer = 2;
 
@@ -40,6 +42,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_2007, ID_VIEW_APPLOOK_2007_3, OnUpdateAppLook)
 	ON_REGISTERED_MESSAGE(AFX_WM_ON_CHANGE_RIBBON_CATEGORY, OnChangeRibbonCategory)
 
+	//处理显示日志消息
+	ON_MESSAGE(WM_SHOWLOG_MESSAGE, OnShowLogMessage)
 
 	ON_COMMAND(ID_RIBBON_BTN_1, &CMainFrame::OnRibbonBtnCryptoAlgAES)
 	ON_COMMAND(ID_BUTTON4, &CMainFrame::OnRibbonBtnCryptoAlgDES)
@@ -222,6 +226,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	OnChangeRibbonCategory(0, 0);
 	//
+	//
+	g_MainFrame = this;
+
 	return 0;
 }
 
@@ -400,4 +407,13 @@ void CMainFrame::OnRibbonBtnCryptoAlgDES()
 {
 	SwitchPage(PAGE_CRYPTO_ALG_DES);
 	m_wndOutput.InsertLog(_T("DES"));
+}
+
+LRESULT CMainFrame::OnShowLogMessage(WPARAM wparam, LPARAM lparam)
+{
+	if (wparam == 1)
+	{
+		m_wndOutput.InsertLog((LPCTSTR)lparam);
+	}
+	return 0;
 }

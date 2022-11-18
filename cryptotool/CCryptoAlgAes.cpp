@@ -5,9 +5,12 @@
 #include "cryptotool.h"
 #include "CCryptoAlgAes.h"
 #include "afxdialogex.h"
+#include "MainFrm.h"
 #include "../Library/padding.h"
 #include "../Library/dataconvert.h"
+#include <mbedtls/aes.h>
 
+extern CMainFrame* g_MainFrame; //全局指针
 
 // CCryptoAlgAes 对话框
 
@@ -55,7 +58,9 @@ BEGIN_MESSAGE_MAP(CCryptoAlgAes, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT4, &CCryptoAlgAes::OnEnChangeEdit4)
 	ON_BN_CLICKED(IDC_BUTTON3, &CCryptoAlgAes::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON2, &CCryptoAlgAes::OnBnClickedButton2)
+	//ON_BN_CLICKED(IDC_BUTTON4, &CCryptoAlgAes::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON4, &CCryptoAlgAes::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON1, &CCryptoAlgAes::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -309,10 +314,157 @@ EXIT:
 }
 
 
+
+
+
 void CCryptoAlgAes::OnBnClickedButton4()
 {
-	// TODO: AES Encrypt
-	unsigned char key[24];
-	unsigned char iv[16];
+	//AES Encrypt
+	int ret;
+	unsigned char ucKey[32] = { 0 };
+	char* pcCipher = NULL;
+	unsigned char* pucInput = NULL;
+	unsigned char* pucOutput = NULL;
+	mbedtls_aes_context ctx;
+	mbedtls_aes_init(&ctx);
+	UpdateData(TRUE);
+	zy_string2hex(ucKey, m_Key.GetBuffer(), m_Key.GetLength());
+	if (m_KeyLength.GetCurSel() == 0) //128bit
+	{
+		if (m_Len_Key != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES key length is incorrect.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
+			goto EXIT;
+		}
+		ret = mbedtls_aes_setkey_enc(&ctx, ucKey, 128);
+		if (ret != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
+			goto EXIT;
+		}
+	}
+	else if (m_KeyLength.GetCurSel() == 1) //192bit
+	{
+		if (m_Len_Key != 24)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES key length is incorrect.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
+			goto EXIT;
+		}
+		ret = mbedtls_aes_setkey_enc(&ctx, ucKey, 192);
+		if (ret != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
+			goto EXIT;
+		}
+	}
+	else if (m_KeyLength.GetCurSel() == 2) //256bit
+	{
+		if (m_Len_Key != 32)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES key length is incorrect.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
+			goto EXIT;
+		}
+		ret = mbedtls_aes_setkey_enc(&ctx, ucKey, 256);
+		if (ret != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
+			goto EXIT;
+		}
+	}
 
+	if (m_Mode.GetCurSel() == 0) //ECB
+	{
+		if (m_Len_Plain != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Plaintext length must be 16.");
+			goto EXIT;
+		}
+		pucInput = (unsigned char*)malloc(16);
+		pucOutput = (unsigned char*)malloc(16);
+		pcCipher = (char*)malloc(33);
+		memset(pucInput, 0, 16);
+		memset(pucOutput, 0, 16);
+		memset(pcCipher, 0, 33);
+		zy_string2hex(pucInput, m_Plain.GetBuffer(), m_Plain.GetLength());
+		ret = mbedtls_aes_crypt_ecb(&ctx, MBEDTLS_AES_ENCRYPT, pucInput, pucOutput);
+		if (ret != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES encrypt failed.");
+			goto EXIT;
+		}
+		zy_hex2string(pcCipher, pucOutput, 16);
+		m_Cipher.Format("%s", pcCipher);
+	}
+	else if (m_Mode.GetCurSel() == 1) //CBC
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 2) //CFB
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 3) //OFB
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 4) //CTR
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 5) //XTS
+	{
+
+	}
+EXIT:
+	UpdateData(FALSE);
+	mbedtls_aes_free(&ctx);
+	free(pucInput);
+	free(pucOutput);
+	free(pcCipher);
+}
+
+
+void CCryptoAlgAes::OnBnClickedButton1()
+{
+	// AES Decrypt
+	UpdateData(TRUE);
+	if (m_Mode.GetCurSel() == 0) //ECB
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 1) //CBC
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 2) //CFB
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 3) //OFB
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 4) //CTR
+	{
+
+	}
+	else if (m_Mode.GetCurSel() == 5) //XTS
+	{
+
+	}
 }

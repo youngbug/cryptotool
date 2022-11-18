@@ -68,6 +68,7 @@ protected:
 	afx_msg void OnAppLook(UINT id);
 	afx_msg void OnUpdateAppLook(CCmdUI* pCmdUI);
 	afx_msg LRESULT OnChangeRibbonCategory(WPARAM, LPARAM);
+	afx_msg LRESULT OnShowLogMessage(WPARAM wparam, LPARAM lparam);
 	void SwitchPage(int nPageId);
 
 	DECLARE_MESSAGE_MAP()
