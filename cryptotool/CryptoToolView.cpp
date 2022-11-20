@@ -203,6 +203,10 @@ void CCryptoToolView::InitPage()
 	m_DlgCryptoAlgDes.CenterWindow();
 	m_DlgCryptoAlgDes.ShowWindow(SW_HIDE);
 	//
+	m_DlgCryptoAlgSm4.Create(IDD_DLG_CRYPTOALG_SM4, this);
+	m_DlgCryptoAlgSm4.CenterWindow();
+	m_DlgCryptoAlgSm4.ShowWindow(SW_HIDE);
+	//
 	//初始化之后当前选中页面在Aes
 	m_pCurrentPage = &m_DlgCryptoAlgAes;
 }
@@ -217,6 +221,9 @@ void CCryptoToolView::SwitchPage(int nPageId)
 		break;
 	case PAGE_CRYPTO_ALG_DES:
 		m_pCurrentPage = &m_DlgCryptoAlgDes;
+		break;
+	case PAGE_CRYPTO_ALG_SM4:
+		m_pCurrentPage = &m_DlgCryptoAlgSm4;
 		break;
 	default:
 		break;

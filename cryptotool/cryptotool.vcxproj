@@ -4011,6 +4011,7 @@
     </ClCompile>
     <ClCompile Include="CCryptoAlgAes.cpp" />
     <ClCompile Include="CCryptoAlgDes.cpp" />
+    <ClCompile Include="CCryptoAlgSm4.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OutputBar.cpp" />
     <ClCompile Include="CryptoTool.cpp" />
@@ -4114,6 +4115,7 @@
     <ClInclude Include="..\thirdparty\mbedtls\include\mbedtls\x509_csr.h" />
     <ClInclude Include="CCryptoAlgAes.h" />
     <ClInclude Include="CCryptoAlgDes.h" />
+    <ClInclude Include="CCryptoAlgSm4.h" />
     <ClInclude Include="cryptotool_cfg.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OutputBar.h" />

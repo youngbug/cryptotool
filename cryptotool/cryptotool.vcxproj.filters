@@ -330,6 +330,9 @@
     <ClCompile Include="..\library\dataconvert.c">
       <Filter>Library</Filter>
     </ClCompile>
+    <ClCompile Include="CCryptoAlgSm4.cpp">
+      <Filter>Source Files\Page</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\CategoryLarge_1.bmp">
@@ -628,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="..\library\dataconvert.h">
       <Filter>Header Files\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="CCryptoAlgSm4.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

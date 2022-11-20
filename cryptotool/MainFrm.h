@@ -79,4 +79,5 @@ protected:
 public:
 	afx_msg void OnRibbonBtnCryptoAlgAES();
 	afx_msg void OnRibbonBtnCryptoAlgDES();
+	afx_msg void OnRibbonBtnCryptoAlgSM4();
 };

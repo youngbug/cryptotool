@@ -5,6 +5,7 @@
 #define IDP_OLE_INIT_FAILED             100
 #define IDD_DLG_CRYPTOALG_AES           106
 #define IDD_DLG_CRYPTOALG_DES           107
+#define IDD_DLG_CRYPTOALG_SM4           108
 #define IDR_MAINFRAME                   128
 #define IDR_RIBBONTYPE                  129
 #define IDR_PASTE_MENU                  134
@@ -144,7 +145,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        199
+#define _APS_NEXT_RESOURCE_VALUE        201
 #define _APS_NEXT_COMMAND_VALUE         32968
 #define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           108

@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 
 	ON_COMMAND(ID_RIBBON_BTN_1, &CMainFrame::OnRibbonBtnCryptoAlgAES)
 	ON_COMMAND(ID_BUTTON4, &CMainFrame::OnRibbonBtnCryptoAlgDES)
+	ON_COMMAND(ID_RIBBON_BTN_3, &CMainFrame::OnRibbonBtnCryptoAlgSM4)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -416,4 +417,11 @@ LRESULT CMainFrame::OnShowLogMessage(WPARAM wparam, LPARAM lparam)
 		m_wndOutput.InsertLog((LPCTSTR)lparam);
 	}
 	return 0;
+}
+
+void CMainFrame::OnRibbonBtnCryptoAlgSM4()
+{
+	// TODO: 
+	SwitchPage(PAGE_CRYPTO_ALG_SM4);
+	m_wndOutput.InsertLog(_T("SM4"));
 }

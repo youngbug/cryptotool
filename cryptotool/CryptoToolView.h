@@ -13,6 +13,7 @@
 
 #include "CCryptoAlgAes.h"
 #include "CCryptoAlgDes.h"
+#include "CCryptoAlgSm4.h"
 #include "cryptotool_cfg.h"
 
 class CCryptoToolView : public CView
@@ -58,6 +59,7 @@ protected:
 	//
 	CCryptoAlgAes m_DlgCryptoAlgAes;
 	CCryptoAlgDes m_DlgCryptoAlgDes;
+	CCryptoAlgSm4 m_DlgCryptoAlgSm4;
 	CRect rt;//保存当前显示CDialog的尺寸
 	DECLARE_MESSAGE_MAP()
 public:
