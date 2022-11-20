@@ -46,6 +46,9 @@
 #define IDC_EDIT6                       1057
 #define IDC_EDIT7                       1058
 #define IDC_EDIT8                       1059
+#define IDC_BUTTON6                     1061
+#define IDC_BUTTON7                     1062
+#define IDC_BUTTON8                     1064
 #define ID_VIEW_TOOLBARS                32771
 #define ID_VIEW_OUTPUT                  32833
 #define ID_VIEW_APPLOOK_2007            32838
@@ -143,7 +146,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        199
 #define _APS_NEXT_COMMAND_VALUE         32968
-#define _APS_NEXT_CONTROL_VALUE         1057
+#define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           108
 #endif
 #endif

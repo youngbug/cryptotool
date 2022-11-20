@@ -60,6 +60,9 @@ BEGIN_MESSAGE_MAP(CCryptoAlgAes, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &CCryptoAlgAes::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON4, &CCryptoAlgAes::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON1, &CCryptoAlgAes::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON8, &CCryptoAlgAes::OnBnClickedButton8)
+	ON_BN_CLICKED(IDC_BUTTON7, &CCryptoAlgAes::OnBnClickedButton7)
+	ON_BN_CLICKED(IDC_BUTTON6, &CCryptoAlgAes::OnBnClickedButton6)
 END_MESSAGE_MAP()
 
 
@@ -675,4 +678,72 @@ EXIT:
 	free(pucOutput);
 	free(pcPlain);
 
+}
+
+
+void CCryptoAlgAes::OnBnClickedButton6()
+{
+	// TODO: 生成key
+	unsigned char buf[32] = { 0 };
+	char key[65] = { 0 };
+	int i = 0;
+	UpdateData(TRUE);
+	for (i = 0; i < 32; i++)
+	{
+		srand(GetTickCount() + i * 1000);
+		buf[i] = (unsigned char)rand() % 256;
+	}
+	if (m_KeyLength.GetCurSel() == 0)
+	{
+		zy_hex2string(key, buf, 16);
+	}
+	else if (m_KeyLength.GetCurSel() == 1)
+	{
+		zy_hex2string(key, buf, 24);
+	}
+	else if (m_KeyLength.GetCurSel() == 2)
+	{
+		zy_hex2string(key, buf, 32);
+	}
+	m_Key.Format("%s", key);
+	m_Len_Key = m_Key.GetLength() / 2;
+	UpdateData(FALSE);
+}
+
+
+void CCryptoAlgAes::OnBnClickedButton7()
+{
+	//生成iv
+	unsigned char buf[16] = { 0 };
+	char iv[33] = { 0 };
+	int i = 0;
+	UpdateData(TRUE);
+	for (i = 0; i < 16; i++)
+	{
+		srand(GetTickCount() + i * 1000);
+		buf[i] = (unsigned char)rand() % 256;
+	}
+	zy_hex2string(iv, buf, 16);
+	m_IV.Format("%s", iv);
+	m_Len_IV = 16;
+	UpdateData(FALSE);
+}
+
+
+void CCryptoAlgAes::OnBnClickedButton8()
+{
+	// 生成明文
+	unsigned char buf[16] = { 0 };
+	char plain[33] = { 0 };
+	int i = 0;
+	UpdateData(TRUE);
+	for (i = 0; i < 16; i++)
+	{
+		srand(GetTickCount() + i * 1000);
+		buf[i] = (unsigned char)rand() % 256;
+	}
+	zy_hex2string(plain, buf, 16);
+	m_Plain.Format("%s", plain);
+	m_Len_Plain = 16;
+	UpdateData(FALSE);
 }
