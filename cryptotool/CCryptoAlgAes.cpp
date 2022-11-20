@@ -58,7 +58,6 @@ BEGIN_MESSAGE_MAP(CCryptoAlgAes, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT4, &CCryptoAlgAes::OnEnChangeEdit4)
 	ON_BN_CLICKED(IDC_BUTTON3, &CCryptoAlgAes::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON2, &CCryptoAlgAes::OnBnClickedButton2)
-	//ON_BN_CLICKED(IDC_BUTTON4, &CCryptoAlgAes::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON4, &CCryptoAlgAes::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON1, &CCryptoAlgAes::OnBnClickedButton1)
 END_MESSAGE_MAP()
@@ -304,6 +303,7 @@ void CCryptoAlgAes::OnBnClickedButton2()
 	}
 	zy_hex2string(str_padded, buf_padded, len);
 	m_Plain.Format("%s", str_padded);
+	OnEnChangeEdit4(); 
 
 EXIT:
 	m_Len_Plain = m_Plain.GetLength() / 2;
@@ -321,14 +321,20 @@ void CCryptoAlgAes::OnBnClickedButton4()
 {
 	//AES Encrypt
 	int ret;
+	int keybits = 128;
+	size_t iv_off = 0;
 	unsigned char ucKey[32] = { 0 };
+	unsigned char iv[16] = { 0 };
+	unsigned char stream_block[16] = { 0 };
 	char* pcCipher = NULL;
 	unsigned char* pucInput = NULL;
 	unsigned char* pucOutput = NULL;
 	mbedtls_aes_context ctx;
+	mbedtls_aes_xts_context xts_ctx;
 	mbedtls_aes_init(&ctx);
+	mbedtls_aes_xts_init(&xts_ctx);
 	UpdateData(TRUE);
-	zy_string2hex(ucKey, m_Key.GetBuffer(), m_Key.GetLength());
+	
 	if (m_KeyLength.GetCurSel() == 0) //128bit
 	{
 		if (m_Len_Key != 16)
@@ -341,12 +347,7 @@ void CCryptoAlgAes::OnBnClickedButton4()
 			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
 			goto EXIT;
 		}
-		ret = mbedtls_aes_setkey_enc(&ctx, ucKey, 128);
-		if (ret != 0)
-		{
-			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
-			goto EXIT;
-		}
+		keybits = 128;
 	}
 	else if (m_KeyLength.GetCurSel() == 1) //192bit
 	{
@@ -360,12 +361,7 @@ void CCryptoAlgAes::OnBnClickedButton4()
 			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
 			goto EXIT;
 		}
-		ret = mbedtls_aes_setkey_enc(&ctx, ucKey, 192);
-		if (ret != 0)
-		{
-			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
-			goto EXIT;
-		}
+		keybits = 192;
 	}
 	else if (m_KeyLength.GetCurSel() == 2) //256bit
 	{
@@ -379,13 +375,23 @@ void CCryptoAlgAes::OnBnClickedButton4()
 			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
 			goto EXIT;
 		}
-		ret = mbedtls_aes_setkey_enc(&ctx, ucKey, 256);
-		if (ret != 0)
-		{
-			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
-			goto EXIT;
-		}
+		keybits = 256;
 	}
+
+	zy_string2hex(ucKey, m_Key.GetBuffer(), m_Key.GetLength());
+	ret = mbedtls_aes_setkey_enc(&ctx, ucKey, keybits);
+	if (ret != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
+		goto EXIT;
+	}
+
+	pucInput = (unsigned char*)malloc(m_Len_Plain);
+	pucOutput = (unsigned char*)malloc(m_Len_Plain);
+	pcCipher = (char*)malloc(m_Len_Plain * 2 + 1);
+	memset(pucInput, 0, m_Len_Plain);
+	memset(pucOutput, 0, m_Len_Plain);
+	memset(pcCipher, 0, m_Len_Plain * 2 + 1);
 
 	if (m_Mode.GetCurSel() == 0) //ECB
 	{
@@ -394,45 +400,92 @@ void CCryptoAlgAes::OnBnClickedButton4()
 			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Plaintext length must be 16.");
 			goto EXIT;
 		}
-		pucInput = (unsigned char*)malloc(16);
-		pucOutput = (unsigned char*)malloc(16);
-		pcCipher = (char*)malloc(33);
-		memset(pucInput, 0, 16);
-		memset(pucOutput, 0, 16);
-		memset(pcCipher, 0, 33);
 		zy_string2hex(pucInput, m_Plain.GetBuffer(), m_Plain.GetLength());
 		ret = mbedtls_aes_crypt_ecb(&ctx, MBEDTLS_AES_ENCRYPT, pucInput, pucOutput);
-		if (ret != 0)
-		{
-			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES encrypt failed.");
-			goto EXIT;
-		}
-		zy_hex2string(pcCipher, pucOutput, 16);
-		m_Cipher.Format("%s", pcCipher);
 	}
 	else if (m_Mode.GetCurSel() == 1) //CBC
 	{
-
+		if (m_Len_Plain % 16 != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Plaintext length must be multiple of the block size(16 bytes).You can push 'Add Padding' button or manual add padding.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length must be 16 bytes.");
+			goto EXIT;
+		}
+		
+		zy_string2hex(pucInput, m_Plain.GetBuffer(), m_Plain.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_cbc(&ctx, MBEDTLS_AES_ENCRYPT, m_Len_Plain, iv, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 2) //CFB
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length must be 16 bytes.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Plain.GetBuffer(), m_Plain.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_cfb128(&ctx, MBEDTLS_AES_ENCRYPT, m_Len_Plain, &iv_off, iv, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 3) //OFB
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length must be 16 bytes.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Plain.GetBuffer(), m_Plain.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_ofb(&ctx, m_Len_Plain, &iv_off, iv, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 4) //CTR
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Nonce counter(IV) length must be 16 bytes.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Plain.GetBuffer(), m_Plain.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		//这里用iv保存nonce,iv_off=0
+		ret = mbedtls_aes_crypt_ctr(&ctx, m_Len_Plain, &iv_off, iv, stream_block, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 5) //XTS
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Address of data unit(IV) length must be 16 bytes.");
+			goto EXIT;
+		}
+		//这里用iv保存
+		ret = mbedtls_aes_xts_setkey_enc(&xts_ctx, ucKey, keybits);
+		if (ret != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES XEX key failed.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Plain.GetBuffer(), m_Plain.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_xts(&xts_ctx, MBEDTLS_AES_ENCRYPT, m_Len_Plain, iv, pucInput, pucOutput);
 	}
+
+	if (ret != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES encrypt failed.");
+		goto EXIT;
+	}
+	zy_hex2string(pcCipher, pucOutput, m_Len_Plain);
+	m_Cipher.Format("%s", pcCipher);
+	m_Len_Cipher = m_Cipher.GetLength() / 2;
+
 EXIT:
 	UpdateData(FALSE);
 	mbedtls_aes_free(&ctx);
+	mbedtls_aes_xts_free(&xts_ctx);
 	free(pucInput);
 	free(pucOutput);
 	free(pcCipher);
@@ -442,29 +495,184 @@ EXIT:
 void CCryptoAlgAes::OnBnClickedButton1()
 {
 	// AES Decrypt
+	int ret;
+	int keybits = 128;
+	size_t iv_off = 0;
+	unsigned char ucKey[32] = { 0 };
+	unsigned char iv[16] = { 0 };
+	unsigned char stream_block[16] = { 0 };
+	char* pcPlain = NULL;
+	unsigned char* pucInput = NULL;
+	unsigned char* pucOutput = NULL;
+	mbedtls_aes_context ctx;
+	mbedtls_aes_xts_context xts_ctx;
+	mbedtls_aes_init(&ctx);
+	mbedtls_aes_xts_init(&xts_ctx);
 	UpdateData(TRUE);
+	if (m_KeyLength.GetCurSel() == 0) //128bit
+	{
+		if (m_Len_Key != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES key length is incorrect.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
+			goto EXIT;
+		}
+		keybits = 128;
+	}
+	else if (m_KeyLength.GetCurSel() == 1) //192bit
+	{
+		if (m_Len_Key != 24)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES key length is incorrect.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
+			goto EXIT;
+		}
+		keybits = 192;
+	}
+	else if (m_KeyLength.GetCurSel() == 2) //256bit
+	{
+		if (m_Len_Key != 32)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES key length is incorrect.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length is incorrect.");
+			goto EXIT;
+		}
+		keybits = 256;
+	}
+
+	zy_string2hex(ucKey, m_Key.GetBuffer(), m_Key.GetLength());
+	ret = mbedtls_aes_setkey_dec(&ctx, ucKey, keybits);
+	if (ret != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
+		goto EXIT;
+	}
+
+	pucInput = (unsigned char*)malloc(m_Len_Cipher);
+	pucOutput = (unsigned char*)malloc(m_Len_Cipher);
+	pcPlain = (char*)malloc(m_Len_Cipher * 2 + 1);
+	memset(pucInput, 0, m_Len_Cipher);
+	memset(pucOutput, 0, m_Len_Cipher);
+	memset(pcPlain, 0, m_Len_Cipher * 2 + 1);
+
+	if (ret != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
+		goto EXIT;
+	}
+
 	if (m_Mode.GetCurSel() == 0) //ECB
 	{
-
+		if (m_Len_Cipher != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Ciphertext length must be 16.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Cipher.GetBuffer(), m_Cipher.GetLength());
+		ret = mbedtls_aes_crypt_ecb(&ctx, MBEDTLS_AES_DECRYPT, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 1) //CBC
 	{
+		if (m_Len_Cipher % 16 != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Ciphertext length must be multiple of the block size(16 bytes).You can push 'Add Padding' button or manual add padding.");
+			goto EXIT;
+		}
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length must be 16 bytes.");
+			goto EXIT;
+		}
 
+		zy_string2hex(pucInput, m_Cipher.GetBuffer(), m_Cipher.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_cbc(&ctx, MBEDTLS_AES_DECRYPT, m_Len_Cipher, iv, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 2) //CFB
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length must be 16 bytes.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Cipher.GetBuffer(), m_Cipher.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_cfb128(&ctx, MBEDTLS_AES_DECRYPT, m_Len_Cipher, &iv_off, iv, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 3) //OFB
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Initialization vector length must be 16 bytes.");
+			goto EXIT;
+		}
+		ret = mbedtls_aes_setkey_enc(&ctx, ucKey, keybits);
+		if (ret != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES key failed.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Cipher.GetBuffer(), m_Cipher.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_ofb(&ctx, m_Len_Cipher, &iv_off, iv, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 4) //CTR
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Nonce counter(IV) length must be 16 bytes.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Cipher.GetBuffer(), m_Cipher.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		//这里用iv保存nonce,iv_off=0
+		ret = mbedtls_aes_crypt_ctr(&ctx, m_Len_Cipher, &iv_off, iv, stream_block, pucInput, pucOutput);
 	}
 	else if (m_Mode.GetCurSel() == 5) //XTS
 	{
-
+		if (m_Len_IV != 16)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Address of data unit(IV) length must be 16 bytes.");
+			goto EXIT;
+		}
+		//这里用iv保存
+		ret = mbedtls_aes_xts_setkey_dec(&xts_ctx, ucKey, keybits);
+		if (ret != 0)
+		{
+			g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Set AES XEX key failed.");
+			goto EXIT;
+		}
+		zy_string2hex(pucInput, m_Cipher.GetBuffer(), m_Cipher.GetLength());
+		zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+		ret = mbedtls_aes_crypt_xts(&xts_ctx, MBEDTLS_AES_ENCRYPT, m_Len_Cipher, iv, pucInput, pucOutput);
 	}
+
+	if (ret != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"AES decrypt failed.");
+		goto EXIT;
+	}
+	zy_hex2string(pcPlain, pucOutput, m_Len_Cipher);
+	m_Plain.Format("%s", pcPlain);
+	m_Len_Plain = m_Plain.GetLength() / 2;
+EXIT:
+	UpdateData(FALSE);
+	mbedtls_aes_free(&ctx);
+	mbedtls_aes_xts_free(&xts_ctx);
+	free(pucInput);
+	free(pucOutput);
+	free(pcPlain);
+
 }
