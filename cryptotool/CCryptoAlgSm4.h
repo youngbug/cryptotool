@@ -21,4 +21,21 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CComboBox m_Mode;
+	afx_msg void OnBnClickedButton4();
+	virtual BOOL OnInitDialog();
+	BOOL CheckHexString(CString strHexString);
+	CString m_Key;
+	CString m_Plain;
+	CString m_IV;
+	CString m_Cipher;
+	int m_Len_Key;
+	int m_Len_IV;
+	int m_Len_Plain;
+	int m_Len_Cipher;
+	afx_msg void OnEnChangeEdit1();
+	afx_msg void OnEnChangeEdit6();
+	afx_msg void OnEnChangeEdit7();
+	afx_msg void OnEnChangeEdit8();
 };

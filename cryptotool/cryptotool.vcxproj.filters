@@ -37,6 +37,12 @@
     <Filter Include="Header Files\Library">
       <UniqueIdentifier>{cd6ac51a-a0b0-4d98-9d25-144c440be29a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="thirdparty\guomi">
+      <UniqueIdentifier>{eb16f1a2-1505-483e-86ce-cb73627cc9e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\thirdparty\guomi">
+      <UniqueIdentifier>{ce034643-1454-4516-a1b3-224ad9d94970}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp">
@@ -332,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="CCryptoAlgSm4.cpp">
       <Filter>Source Files\Page</Filter>
+    </ClCompile>
+    <ClCompile Include="..\thirdparty\guomi\sm4.c">
+      <Filter>thirdparty\guomi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -634,6 +643,9 @@
     </ClInclude>
     <ClInclude Include="CCryptoAlgSm4.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\thirdparty\guomi\sm4.h">
+      <Filter>Header Files\thirdparty\guomi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
