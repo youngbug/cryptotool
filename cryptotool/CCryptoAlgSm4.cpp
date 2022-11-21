@@ -5,9 +5,11 @@
 #include "cryptotool.h"
 #include "afxdialogex.h"
 #include "CCryptoAlgSm4.h"
+#include "MainFrm.h"
 #include "../Library/dataconvert.h"
 #include <sm4.h>
 
+extern CMainFrame* g_MainFrame; //全局指针
 
 // CCryptoAlgSm4 对话框
 
@@ -71,6 +73,24 @@ void CCryptoAlgSm4::OnBnClickedButton4()
 	int ret = 0;
 	UpdateData(TRUE);
 	
+	if (m_Len_Key % 16 != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"SM4 key length is incorrect.");
+		goto EXIT;
+	}
+
+	if (m_Len_IV != 16)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"IV length is incorrect.");
+		goto EXIT;
+	}
+
+	if (m_Len_Plain % 16 != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Plaintext length is incorrect.");
+		goto EXIT;
+	}
+
 	zy_string2hex(key, m_Key.GetBuffer(), m_Key.GetLength());
 	zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
 	input = (unsigned char*)malloc(m_Len_Plain);
@@ -84,8 +104,13 @@ void CCryptoAlgSm4::OnBnClickedButton4()
 	{
 		sm4_crypt_ecb(&ctx, SM4_ENCRYPT, m_Len_Plain, input, output);
 	}
+	else
+	{
+		sm4_crypt_cbc(&ctx, SM4_ENCRYPT, m_Len_Plain, iv, input, output);
+	}
 	zy_hex2string(cipher, output, m_Len_Plain);
 	m_Cipher.Format("%s", cipher);
+	m_Len_Cipher = m_Cipher.GetLength() / 2;
 EXIT:
 	UpdateData(FALSE);
 	free(input);

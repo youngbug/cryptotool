@@ -209,8 +209,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 
-	m_wndStatusBar.AddElement(new CMFCRibbonStatusBarPane(ID_STATUSBAR_PANE1, _T("CyrptoTool"), TRUE), _T("CyrptoTool"));
-	m_wndStatusBar.AddExtendedElement(new CMFCRibbonStatusBarPane(ID_STATUSBAR_PANE2, _T("ZHAO YANG"), TRUE), _T("ZHAO YANG"));
+	m_wndStatusBar.AddElement(new CMFCRibbonStatusBarPane(ID_STATUSBAR_PANE1, _T("CryptoTool 加密算法、智能卡、网络安全、数字证书、密码钥匙工具"), TRUE), _T("CyrptoTool"));
+	m_wndStatusBar.AddExtendedElement(new CMFCRibbonStatusBarPane(ID_STATUSBAR_PANE2, _T("Author:赵 洋"), TRUE), _T("Author:赵 洋"));
 
 	if (!m_wndOutput.Create(_T("Output"), this, CRect(0, 0, 150, 150),
 		TRUE /* Has gripper */, ID_VIEW_OUTPUT,

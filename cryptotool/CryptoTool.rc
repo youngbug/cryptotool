@@ -615,7 +615,7 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_STATUSBAR_PANE1      "Release date: 2021.10.11"
+    ID_STATUSBAR_PANE1      "Release date: 2022.11.21"
     ID_STATUSBAR_PANE2      "Email:cnrgc@163.com WeChat:zhantianzuo"
 END
 
