@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CCryptoAlgSm4, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT2, &CCryptoAlgSm4::OnEnChangeEdit6)
 	ON_EN_CHANGE(IDC_EDIT3, &CCryptoAlgSm4::OnEnChangeEdit7)
 	ON_EN_CHANGE(IDC_EDIT4, &CCryptoAlgSm4::OnEnChangeEdit8)
+	ON_BN_CLICKED(IDC_BUTTON1, &CCryptoAlgSm4::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -73,7 +74,7 @@ void CCryptoAlgSm4::OnBnClickedButton4()
 	int ret = 0;
 	UpdateData(TRUE);
 	
-	if (m_Len_Key % 16 != 0)
+	if (m_Len_Key != 16)
 	{
 		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"SM4 key length is incorrect.");
 		goto EXIT;
@@ -123,6 +124,7 @@ BOOL CCryptoAlgSm4::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	SetBackgroundColor(RGB(255, 255, 255));//窗体背景色设置成白色
 	//
 	m_Mode.InsertString(0, "ECB (Electronic Codebook Book)");
 	m_Mode.InsertString(1, "CBC (Cipher Block Chaining)");
@@ -201,4 +203,100 @@ void CCryptoAlgSm4::OnEnChangeEdit8()
 	m_Len_Cipher = m_Cipher.GetLength() / 2;
 
 	UpdateData(FALSE);
+}
+
+
+BOOL CCryptoAlgSm4::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	int x = 'a' - 'A';
+
+	if (GetFocus() == GetDlgItem(IDC_EDIT1) ||
+		GetFocus() == GetDlgItem(IDC_EDIT2) ||
+		GetFocus() == GetDlgItem(IDC_EDIT3) ||
+		GetFocus() == GetDlgItem(IDC_EDIT4))
+	{
+		if (pMsg->message == WM_CHAR)
+		{
+			if ((pMsg->wParam < 'a' || pMsg->wParam > 'f') &&
+				(pMsg->wParam < 'A' || pMsg->wParam > 'F') &&
+				(pMsg->wParam < '0' || pMsg->wParam > '9') &&
+				(pMsg->wParam != VK_BACK) &&
+				(pMsg->wParam != 0x16)
+				)
+			{
+				return TRUE;//0~9 a-z A-Z之外的字符全都拦截
+			}
+			if (pMsg->wParam >= 'a' && pMsg->wParam <= 'f')
+			{
+				pMsg->wParam -= x; //小写字母转换成大写的
+			}
+		}
+		else if (pMsg->message == WM_KEYDOWN)
+		{
+			if (pMsg->wParam == VK_ESCAPE || pMsg->wParam == VK_RETURN)
+			{
+				return TRUE;
+			}
+		}
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CCryptoAlgSm4::OnBnClickedButton1()
+{
+	// SM4 Decrypt
+	unsigned char key[16] = { 0 };
+	unsigned char iv[16] = { 0 };
+	unsigned char* input = NULL;
+	unsigned char* output = NULL;
+	char* plain = NULL;
+	sm4_context ctx;
+	int ret = 0;
+	UpdateData(TRUE);
+
+	if (m_Len_Key % 16 != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"SM4 key length is incorrect.");
+		goto EXIT;
+	}
+
+	if (m_Len_IV != 16)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"IV length is incorrect.");
+		goto EXIT;
+	}
+
+	if (m_Len_Cipher % 16 != 0)
+	{
+		g_MainFrame->PostMessageA(WM_SHOWLOG_MESSAGE, 1, (LPARAM)"Ciphertext length is incorrect.");
+		goto EXIT;
+	}
+
+	zy_string2hex(key, m_Key.GetBuffer(), m_Key.GetLength());
+	zy_string2hex(iv, m_IV.GetBuffer(), m_IV.GetLength());
+	input = (unsigned char*)malloc(m_Len_Cipher);
+	output = (unsigned char*)malloc(m_Len_Cipher);
+	plain = (char*)malloc(m_Len_Cipher * 2 + 1);
+	memset(plain, 0, m_Len_Cipher * 2 + 1);
+	zy_string2hex(input, m_Cipher.GetBuffer(), m_Cipher.GetLength());
+
+	sm4_setkey_dec(&ctx, key);
+	if (m_Mode.GetCurSel() == 0)
+	{
+		sm4_crypt_ecb(&ctx, SM4_DECRYPT, m_Len_Cipher, input, output);
+	}
+	else
+	{
+		sm4_crypt_cbc(&ctx, SM4_DECRYPT, m_Len_Cipher, iv, input, output);
+	}
+	zy_hex2string(plain, output, m_Len_Cipher);
+	m_Plain.Format("%s", plain);
+	m_Len_Plain = m_Plain.GetLength() / 2;
+EXIT:
+	UpdateData(FALSE);
+	free(input);
+	free(output);
+	free(plain);
 }

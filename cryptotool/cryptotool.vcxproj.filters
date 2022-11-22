@@ -641,11 +641,11 @@
     <ClInclude Include="..\library\dataconvert.h">
       <Filter>Header Files\Library</Filter>
     </ClInclude>
-    <ClInclude Include="CCryptoAlgSm4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\thirdparty\guomi\sm4.h">
       <Filter>Header Files\thirdparty\guomi</Filter>
+    </ClInclude>
+    <ClInclude Include="CCryptoAlgSm4.h">
+      <Filter>Header Files\Page</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -38,4 +38,6 @@ public:
 	afx_msg void OnEnChangeEdit6();
 	afx_msg void OnEnChangeEdit7();
 	afx_msg void OnEnChangeEdit8();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnBnClickedButton1();
 };
