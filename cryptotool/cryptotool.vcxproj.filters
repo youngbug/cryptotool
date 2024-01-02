@@ -342,6 +342,9 @@
     <ClCompile Include="..\thirdparty\guomi\sm4.c">
       <Filter>thirdparty\guomi</Filter>
     </ClCompile>
+    <ClCompile Include="CCryptoAlgRsa.cpp">
+      <Filter>Source Files\Page</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\CategoryLarge_1.bmp">
@@ -645,6 +648,9 @@
       <Filter>Header Files\thirdparty\guomi</Filter>
     </ClInclude>
     <ClInclude Include="CCryptoAlgSm4.h">
+      <Filter>Header Files\Page</Filter>
+    </ClInclude>
+    <ClInclude Include="CCryptoAlgRsa.h">
       <Filter>Header Files\Page</Filter>
     </ClInclude>
   </ItemGroup>

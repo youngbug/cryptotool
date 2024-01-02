@@ -5,5 +5,6 @@
 #define PAGE_CRYPTO_ALG_AES					0
 #define PAGE_CRYPTO_ALG_DES					1
 #define PAGE_CRYPTO_ALG_SM4					2
+#define PAGE_CRYPTO_ALG_RSA					3
 
 #endif // !__CRRPTOTOOL_CFG_H_

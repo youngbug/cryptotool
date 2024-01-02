@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_RIBBON_BTN_1, &CMainFrame::OnRibbonBtnCryptoAlgAES)
 	ON_COMMAND(ID_BUTTON4, &CMainFrame::OnRibbonBtnCryptoAlgDES)
 	ON_COMMAND(ID_RIBBON_BTN_3, &CMainFrame::OnRibbonBtnCryptoAlgSM4)
+	ON_COMMAND(ID_RIBBON_BTN_4, &CMainFrame::OnRibbonBtnRsa)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -424,4 +425,12 @@ void CMainFrame::OnRibbonBtnCryptoAlgSM4()
 	// TODO: 
 	SwitchPage(PAGE_CRYPTO_ALG_SM4);
 	m_wndOutput.InsertLog(_T("SM4"));
+}
+
+
+void CMainFrame::OnRibbonBtnRsa()
+{
+	// TODO: 
+	SwitchPage(PAGE_CRYPTO_ALG_RSA);
+	m_wndOutput.InsertLog(_T("RSA"));
 }

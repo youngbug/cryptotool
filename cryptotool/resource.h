@@ -3,6 +3,7 @@
 // π© CryptoTool.rc  π”√
 //
 #define IDP_OLE_INIT_FAILED             100
+#define IDD_DLG_CRYPTOALG_RSA           102
 #define IDD_DLG_CRYPTOALG_AES           106
 #define IDD_DLG_CRYPTOALG_DES           107
 #define IDD_DLG_CRYPTOALG_SM4           108
@@ -34,14 +35,20 @@
 #define IDD_ABOUTBOX                    999
 #define IDC_EDIT1                       1042
 #define IDC_BUTTON1                     1043
+#define IDC_EDIT9                       1043
 #define IDC_EDIT2                       1044
 #define IDC_EDIT3                       1045
 #define IDC_EDIT4                       1046
 #define IDC_COMBO1                      1047
+#define IDC_EDIT10                      1047
 #define IDC_COMBO2                      1048
+#define IDC_EDIT11                      1048
 #define IDC_COMBO3                      1049
+#define IDC_EDIT12                      1049
 #define IDC_BUTTON2                     1050
+#define IDC_EDIT13                      1050
 #define IDC_BUTTON3                     1051
+#define IDC_EDIT14                      1051
 #define IDC_BUTTON4                     1052
 #define IDC_EDIT5                       1056
 #define IDC_EDIT6                       1057
@@ -145,7 +152,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        201
+#define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32968
 #define _APS_NEXT_CONTROL_VALUE         1062
 #define _APS_NEXT_SYMED_VALUE           108
